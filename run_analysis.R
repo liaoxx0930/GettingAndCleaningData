@@ -34,4 +34,12 @@ names(X) <- gsub("\\(|\\)","",toupper(featureslist[features, 2]))
 names(Y) <- "ACTIVITY"
 names(S) <- "SUBJECT"
 Dataset <- cbind(S, Y, X)
-write.table(Dataset, "DataSetStep4.txt")
+
+## 5. Creates a 2nd, independent tidy data set with the average of each variable for each activity and each subject.
+
+CleanData <- aggregate(Dataset[, 3:ncol(Dataset)], by=list(SUBJECT = Dataset$SUBJECT, 
+                               ACTIVITY = Dataset$ACTIVITY),mean)
+
+# Write table
+
+write.table(CleanData, "TidyDataSet.txt",row.names=F)
